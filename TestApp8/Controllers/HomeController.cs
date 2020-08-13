@@ -13,7 +13,7 @@ namespace TestApp8.Controllers
     {
         public ActionResult Index()
         {
-            List<HomeModel> homelist = new List<HomeModel>();
+            List<HomeViewModel> homelist = new List<HomeViewModel>();
             using (var conn = new SqlConnection(
             ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
             {
