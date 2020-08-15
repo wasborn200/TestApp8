@@ -49,7 +49,7 @@ namespace TestApp8.Controllers
 
         public ActionResult SingIn(AuthViewModel vm)
         {
-
+            return View("Auth", "Login");
         }
 
         /// <summary>
@@ -102,6 +102,32 @@ namespace TestApp8.Controllers
                 throw;
             }
         }
+
+        private static void InsertAccount(AuthViewModel vm)
+        {
+            try
+            {
+                //SQLServerの接続開始
+                SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
+                SqlCommand cmd = dbaccess.CreateCommand();
+                dbaccess.Open();
+                try
+                {
+                    AuthDao dao = new AuthDao();
+                    loginuser = dao.getPassword(vm, dbaccess, cmd);
+                }
+                catch
+                {
+                    throw;
+                }
+                dbaccess.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 
 }
