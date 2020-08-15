@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("アプリケーション名", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("ログインアプリ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -25,6 +25,18 @@
                     <li>@Html.ActionLink("詳細", "About", "Home")</li>
                     <li>@Html.ActionLink("問い合わせ", "Contact", "Home")</li>
                 </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("ログアウト", "Logout", "Auth")</li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("ログイン", "Login", "Auth")</li>
+                    </ul>
+                }
             </div>
         </div>
     </div>

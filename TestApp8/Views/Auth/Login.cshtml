@@ -1,0 +1,22 @@
+﻿@model TestApp8.Models.AuthViewModel
+@{
+    ViewBag.Title = "ログイン";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-item">
+        @Html.LabelFor(model => model.Id)
+        @Html.TextBoxFor(model => model.Id)
+    </div>
+    <div class="form-item">
+        @Html.LabelFor(model => model.Password)
+        @Html.TextBoxFor(model => model.Password)
+    </div>
+    <div class="button-panel">
+        <input type="submit" class="button" value="ログイン" />
+    </div>
+    <br />
+    <label style="color:#ff0000">@Html.ValidationSummary()</label>
+}

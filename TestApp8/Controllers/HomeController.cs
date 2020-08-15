@@ -13,27 +13,6 @@ namespace TestApp8.Controllers
     {
         public ActionResult Index()
         {
-            List<HomeViewModel> homelist = new List<HomeViewModel>();
-            using (var conn = new SqlConnection(
-            ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
-            {
-                var cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM test";
-                conn.Open();
-                using (var sdr = cmd.ExecuteReader())
-                {
-                    if (sdr.HasRows)
-                    {
-                        while (sdr.Read())
-                        {
-                            var id = sdr["ID"];
-                            var name = sdr["NAME"].ToString();
-                            ViewData["id"] = id;
-                            ViewData["name"] = name;
-                        }
-                    }
-                }
-            }
             return View();
         }
 
