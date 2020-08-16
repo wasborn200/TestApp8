@@ -9,6 +9,7 @@ using TestApp8.Models;
 
 namespace TestApp8.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()

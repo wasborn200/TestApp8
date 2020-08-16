@@ -7,7 +7,8 @@ namespace TestApp8.DataModels
 {
     public class AuthModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public string Password { get; set; }
     }
 }

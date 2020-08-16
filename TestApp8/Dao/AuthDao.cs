@@ -11,7 +11,7 @@ namespace TestApp8.Dao
 {
     public class AuthDao
     {
-        public AuthModel getPassword(AuthViewModel vm, SqlConnection dbaccess, SqlCommand cmd)
+        public AuthModel getPassword(AuthViewModel vm, SqlCommand cmd)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(" SELECT");
@@ -19,7 +19,7 @@ namespace TestApp8.Dao
             sb.Append(" FROM");
             sb.Append(" ACCOUNT");
             sb.Append(" WHERE");
-            sb.Append($" ID = '{vm.Id}'");
+            sb.Append($" NAME = '{vm.Name}'");
             cmd.CommandText = sb.ToString();
 
             AuthModel loginuser = new AuthModel();
@@ -34,6 +34,24 @@ namespace TestApp8.Dao
                 }
             }
             return loginuser;
+        }
+
+
+        public void InsertAccount(AuthViewModel vm, SqlCommand cmd)
+        {
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" INSERT INTO");
+            sb.Append(" ACCOUNT");
+            sb.Append(" (NAME,");
+            sb.Append(" PASSWORD)");
+            sb.Append(" VALUES");
+            sb.Append($" ('{vm.Name}',");
+            sb.Append($" '{vm.Password}')");
+            cmd.CommandText = sb.ToString();
+
+            cmd.ExecuteNonQuery();
+
         }
     }
 }

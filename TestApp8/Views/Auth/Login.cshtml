@@ -7,8 +7,8 @@
 @using (Html.BeginForm())
 {
     <div class="form-item">
-        @Html.LabelFor(model => model.Id)
-        @Html.TextBoxFor(model => model.Id)
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name)
     </div>
     <div class="form-item">
         @Html.LabelFor(model => model.Password)
@@ -17,6 +17,8 @@
     <div class="button-panel">
         <input type="submit" class="button" value="ログイン" />
     </div>
+    <br />
+   　@Html.ActionLink("新規アカウント作成", "Signin", "Auth")
     <br />
     <label style="color:#ff0000">@Html.ValidationSummary()</label>
 }

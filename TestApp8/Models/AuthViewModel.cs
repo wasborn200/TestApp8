@@ -8,9 +8,9 @@ namespace TestApp8.Models
 {
     public class AuthViewModel
     {
-        [Display(Name = "ユーザーID")]
-        [Required(ErrorMessage = "ユーザーIDは必須入力です。")]
-        public string Id { get; set; }
+        [Display(Name = "ユーザーネーム")]
+        [Required(ErrorMessage = "ユーザーネームは必須入力です。")]
+        public string Name { get; set; }
 
         [Display(Name = "パスワード")]
         [Required(ErrorMessage = "パスワードは必須入力です。")]

@@ -36,7 +36,7 @@ namespace TestApp8.Controllers
             if (isMatchAccount(vm))
             {
                 // ユーザー認証　成功
-                FormsAuthentication.SetAuthCookie(vm.Id, true);
+                FormsAuthentication.SetAuthCookie(vm.Name, true);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -47,9 +47,26 @@ namespace TestApp8.Controllers
             }
         }
 
-        public ActionResult SingIn(AuthViewModel vm)
+        [HttpGet]
+        public ActionResult Signin()
         {
-            return View("Auth", "Login");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Signin(AuthViewModel vm)
+        {
+            try
+            {
+                InsertAccount(vm);
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "アカウントを登録することが出来ませんでした。");
+            }
+            return this.View(vm);
         }
 
         /// <summary>
@@ -59,7 +76,7 @@ namespace TestApp8.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Auth", "Index");
+            return RedirectToAction("Login", "Auth");
         }
 
         private static bool isMatchAccount(AuthViewModel vm)
@@ -78,8 +95,6 @@ namespace TestApp8.Controllers
 
         private static AuthModel getPassword(AuthViewModel vm)
         {
-            try
-            {
                 AuthModel loginuser;
                 //SQLServerの接続開始
                 SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
@@ -88,7 +103,7 @@ namespace TestApp8.Controllers
                 try
                 {
                     AuthDao dao = new AuthDao();
-                    loginuser = dao.getPassword(vm, dbaccess, cmd);
+                    loginuser = dao.getPassword(vm, cmd);
                 }
                 catch
                 {
@@ -96,36 +111,25 @@ namespace TestApp8.Controllers
                 }
                 dbaccess.Close();
                 return loginuser;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
         private static void InsertAccount(AuthViewModel vm)
         {
+            //SQLServerの接続開始
+            SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
+            SqlCommand cmd = dbaccess.CreateCommand();
+            dbaccess.Open();
             try
             {
-                //SQLServerの接続開始
-                SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
-                SqlCommand cmd = dbaccess.CreateCommand();
-                dbaccess.Open();
-                try
-                {
-                    AuthDao dao = new AuthDao();
-                    loginuser = dao.getPassword(vm, dbaccess, cmd);
-                }
-                catch
-                {
-                    throw;
-                }
-                dbaccess.Close();
+                AuthDao dao = new AuthDao();
+                dao.InsertAccount(vm, cmd);
             }
             catch (Exception)
             {
                 throw;
             }
+            dbaccess.Close();
+
         }
 
     }
