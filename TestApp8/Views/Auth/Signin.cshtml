@@ -1,0 +1,22 @@
+﻿@model TestApp8.Models.AuthViewModel
+@{
+    ViewBag.Title = "サインイン";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-item">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name)
+    </div>
+    <div class="form-item">
+        @Html.LabelFor(model => model.Password)
+        @Html.TextBoxFor(model => model.Password)
+    </div>
+    <div class="button-panel">
+        <input type="submit" class="button" value="新規アカウント作成" />
+    </div>
+    <br />
+    <label style="color:#ff0000">@Html.ValidationSummary()</label>
+}
