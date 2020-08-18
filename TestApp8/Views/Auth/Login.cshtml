@@ -18,7 +18,25 @@
         <input type="submit" class="button" value="ログイン" />
     </div>
     <br />
-   　@Html.ActionLink("新規アカウント作成", "Signin", "Auth")
+    @Html.ActionLink("新規アカウント作成", "Signin", "Auth")
     <br />
     <label style="color:#ff0000">@Html.ValidationSummary()</label>
 }
+
+
+@*
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
+    <script>
+        var strMessage = '@ViewData["SccessMessage"]';
+        strMessage = strMessage.replace(/&#xD;&#xA;/g, "<br />");
+        if (strMessage != "") {
+            $("#errBox").html(strMessage);
+            $('#centralModelDanger').model('show');
+        }
+    </script>
+
+*@

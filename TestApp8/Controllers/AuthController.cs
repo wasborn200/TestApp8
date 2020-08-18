@@ -39,6 +39,7 @@ namespace TestApp8.Controllers
                 // ユーザー認証　成功
                 FormsAuthentication.SetAuthCookie(vm.Name, true);
                 return RedirectToAction("Index", "Home");
+
             }
             else
             {

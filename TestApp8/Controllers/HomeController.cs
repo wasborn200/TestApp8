@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TestApp8.Dao;
+using TestApp8.DataModels;
 using TestApp8.Models;
 
 namespace TestApp8.Controllers
@@ -14,7 +17,16 @@ namespace TestApp8.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<AuthModel> authList = getAuthList();
+            List<AuthViewModel> authViewList = new List<AuthViewModel>();
+            foreach (var item in authList)
+            {
+                AuthViewModel authModel = new AuthViewModel();
+                authModel.Name = item.Name;
+                authModel.Email = item.Email;
+                authViewList.Add(authModel);
+            }
+            return View("index", authViewList);
         }
 
         public ActionResult About()
@@ -29,6 +41,25 @@ namespace TestApp8.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private List<AuthModel> getAuthList()
+        {
+            DbAccess dbAccess = new DbAccess();
+            SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
+            try
+            {
+                AuthDao dao = new AuthDao();
+                List<AuthModel> authList = dao.getPassword2(dbAccess, cmd);
+
+                dbAccess.close();
+                return authList;
+            }
+            catch (DbException)
+            {
+                dbAccess.close();
+                throw;
+            }
         }
     }
 }

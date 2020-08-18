@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<TestApp8.Models.AuthViewModel>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -6,6 +8,30 @@
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div>
+    <table class="table table-condensed table-striped table-bordered">
+        <tr>
+            <th>
+                <label>Name</label>
+            </th>
+            <th>
+                <label>Email</label>
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelitem => item.Name)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelitem => item.Email)
+                </th>
+            </tr>
+        }
+    </table>
 </div>
 
 <div class="row">

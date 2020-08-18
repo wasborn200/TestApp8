@@ -124,6 +124,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dao\AuthDao.cs" />
+    <Compile Include="Dao\DbAccess.cs" />
     <Compile Include="DataModels\AuthModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
