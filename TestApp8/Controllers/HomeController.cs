@@ -4,8 +4,11 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Security;
 using TestApp8.Dao;
 using TestApp8.DataModels;
 using TestApp8.Models;
@@ -30,6 +33,13 @@ namespace TestApp8.Controllers
                 authModel.Email = item.Email;
                 authViewList.Add(authModel);
             }
+            // TempData["message"] = User.Identity.Name;
+
+            FormsIdentity id = (FormsIdentity)HttpContext.User.Identity;
+            FormsAuthenticationTicket ticket = id.Ticket;
+            string MyUserData = ticket.UserData;
+            TempData["message"] = MyUserData;
+
             return View("index", authViewList);
         }
 

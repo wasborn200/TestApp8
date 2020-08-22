@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Data.SqlClient;
 using TestApp8.Dao;
+using System.Windows.Forms;
 
 namespace TestApp8.Controllers
 {
@@ -32,8 +33,16 @@ namespace TestApp8.Controllers
         {
             if (isMatchAccount(vm))
             {
+                vm.AccountId = getAccountId(vm);
                 // ユーザー認証　成功
-                FormsAuthentication.SetAuthCookie(vm.Name, true);
+                // FormsAuthentication.SetAuthCookie(vm.Name, true);
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                    vm.Name, DateTime.Now, DateTime.Now.AddMinutes(30), 
+                    false, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
+
+                string encTicket = FormsAuthentication.Encrypt(ticket);
+                Response.Cookies.Add(new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+
                 return RedirectToAction("Index", "Home");
 
             }
@@ -119,6 +128,30 @@ namespace TestApp8.Controllers
                     dbAccess.close();
                     return false;
                 }
+            }
+            catch
+            {
+                dbAccess.close();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// アカウントID取得
+        /// </summary>
+        /// <param name="vm">アカウント認証ビューモデル</param>
+        /// <returns></returns>
+        private int getAccountId(AuthViewModel vm)
+        {
+            //SQLServerの接続開始
+            DbAccess dbAccess = new DbAccess();
+            SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
+            try
+            {
+                AuthDao dao = new AuthDao();
+                int accountid = dao.getAccountId(dbAccess, vm, cmd);
+                dbAccess.close();
+                return accountid;
             }
             catch
             {

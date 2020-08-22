@@ -31,6 +31,17 @@ namespace TestApp8.Dao
             return result;
         }
 
+        public int getAccountId(DbAccess dbAccess, AuthViewModel vm, SqlCommand cmd)
+        {
+            cmd.CommandText = this.getAccountIdSelectQuery(vm);
+
+            DataTable dt = new DataTable();
+            dt = dbAccess.executeQuery(cmd);
+
+            int accountid = getAccountIdBindTable(dt);
+            return accountid;
+        }
+
         /// <summary>
         /// アカウントリスト取得
         /// </summary>
@@ -86,6 +97,15 @@ namespace TestApp8.Dao
             return result;
         }
 
+        private int getAccountIdBindTable(DataTable dt)
+        {
+
+            DataRow dr = dt.Rows[0];
+            int result = Convert.ToInt32(dr["ACCOUNT_ID"]);
+
+            return result;
+        }
+
         /// <summary>
         /// データテーブル型からList<AuthModel>に変換
         /// </summary>
@@ -134,6 +154,20 @@ namespace TestApp8.Dao
             sb.Append(" WHERE");
             sb.Append($" NAME = '{vm.Name}'");
             sb.Append($" AND PASSWORD = '{vm.Password}'");
+
+            return sb.ToString();
+        }
+
+        private string getAccountIdSelectQuery(AuthViewModel vm)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT")
+              .Append(" ACCOUNT_ID")
+              .Append(" FROM")
+              .Append(" ACCOUNT")
+              .Append(" WHERE")
+              .Append($" NAME = '{vm.Name}'");
 
             return sb.ToString();
         }
