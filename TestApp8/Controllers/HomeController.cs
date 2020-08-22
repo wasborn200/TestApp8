@@ -15,9 +15,13 @@ namespace TestApp8.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        /// <summary>
+        /// ホーム画面
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
-            List<AuthModel> authList = getAuthList();
+            List<AuthModel> authList = getAccountList();
             List<AuthViewModel> authViewList = new List<AuthViewModel>();
             foreach (var item in authList)
             {
@@ -43,14 +47,18 @@ namespace TestApp8.Controllers
             return View();
         }
 
-        private List<AuthModel> getAuthList()
+        /// <summary>
+        /// アカウントリスト取得
+        /// </summary>
+        /// <returns></returns>
+        private List<AuthModel> getAccountList()
         {
             DbAccess dbAccess = new DbAccess();
             SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
             try
             {
                 AuthDao dao = new AuthDao();
-                List<AuthModel> authList = dao.getPassword2(dbAccess, cmd);
+                List<AuthModel> authList = dao.getAccountList(dbAccess, cmd);
 
                 dbAccess.close();
                 return authList;

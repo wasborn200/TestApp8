@@ -16,6 +16,7 @@ namespace TestApp8.Models
         [Required(ErrorMessage = "パスワードは必須入力です。")]
         public string Password { get; set; }
 
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         public List<AuthViewModel> authViewList { get; set; }

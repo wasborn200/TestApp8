@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Web;
 using TestApp8.DataModels;
 using TestApp8.Models;
 
@@ -12,30 +10,88 @@ namespace TestApp8.Dao
 {
     public class AuthDao
     {
-        public List<AuthModel> getPassword2(DbAccess dbAccess, SqlCommand cmd)
+        #region データ取得
+
+        /// <summary>
+        /// アカウント認証
+        /// </summary>
+        /// <param name="dbAccess">DBアクセス設定</param>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <param name="cmd">SQLクエリ</param>
+        /// <returns></returns>
+        public int isMatchAccount(DbAccess dbAccess, AuthViewModel vm, SqlCommand cmd)
         {
-            cmd.CommandText = this.getSelectQuery();
+            cmd.CommandText = this.getAccountSelectQuery(vm);
 
             DataTable dt = new DataTable();
             dt = dbAccess.executeQuery(cmd);
 
-            List<AuthModel> paidList = this.getListBindDataTable(dt);
+            int result = getCountAccountBindTable(dt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// アカウントリスト取得
+        /// </summary>
+        /// <param name="dbAccess">DBアクセス設定</param>
+        /// <param name="cmd">SQLクエリ</param>
+        /// <returns></returns>
+        public List<AuthModel> getAccountList(DbAccess dbAccess, SqlCommand cmd)
+        {
+            cmd.CommandText = this.getAccountListSelectQuery();
+
+            DataTable dt = new DataTable();
+            dt = dbAccess.executeQuery(cmd);
+
+            List<AuthModel> paidList = this.getAccountListBindDataTable(dt);
 
             return paidList;
         }
 
-        private string getSelectQuery()
+        #endregion
+
+        #region 登録
+
+        /// <summary>
+        /// アカウント登録
+        /// </summary>
+        /// <param name="dbAccess">DBアクセス設定</param>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <param name="cmd">SQLクエリ</param>
+        /// <returns></returns>
+        public int InsertAccount(AuthViewModel vm, SqlCommand cmd, DbAccess dbAccess)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(" SELECT")
-              .Append(" NAME,")
-              .Append(" EMAIL")
-              .Append(" FROM")
-              .Append(" ACCOUNT");
-            return sb.ToString();
+            cmd.CommandText = this.getRegisterQuery(vm);
+
+            return dbAccess.executeNonQuery(cmd);
+
         }
 
-        private List<AuthModel> getListBindDataTable(DataTable dt)
+        #endregion
+
+        #region データテーブル
+
+        /// <summary>
+        /// データテーブル型からint型に変換
+        /// </summary>
+        /// <param name="dt">データテーブル</param>
+        /// <returns></returns>
+        private int getCountAccountBindTable(DataTable dt)
+        {
+
+            DataRow dr = dt.Rows[0];
+            int result = Convert.ToInt32(dr["COUNT"]);
+
+            return result;
+        }
+
+        /// <summary>
+        /// データテーブル型からList<AuthModel>に変換
+        /// </summary>
+        /// <param name="dt">データテーブル</param>
+        /// <returns></returns>
+        private List<AuthModel> getAccountListBindDataTable(DataTable dt)
         {
             List<AuthModel> authList = new List<AuthModel>();
 
@@ -55,51 +111,71 @@ namespace TestApp8.Dao
 
             }
             return authList;
-        } 
+        }
 
-        #region ネット検索より作成
+        #endregion
 
-        public AuthModel getPassword(AuthViewModel vm, SqlCommand cmd)
+        #region クエリ
+
+        /// <summary>
+        /// アカウント認証用クエリ作成
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private string getAccountSelectQuery(AuthViewModel vm)
         {
+
             StringBuilder sb = new StringBuilder();
+
             sb.Append(" SELECT");
-            sb.Append(" PASSWORD");
+            sb.Append(" COUNT(Name) AS COUNT");
             sb.Append(" FROM");
             sb.Append(" ACCOUNT");
             sb.Append(" WHERE");
             sb.Append($" NAME = '{vm.Name}'");
-            cmd.CommandText = sb.ToString();
+            sb.Append($" AND PASSWORD = '{vm.Password}'");
 
-            AuthModel loginuser = new AuthModel();
-            using (var sdr = cmd.ExecuteReader())
-            {
-                if (sdr.HasRows)
-                {
-                    while (sdr.Read())
-                    {
-                        loginuser.Password = sdr["PASSWORD"].ToString();
-                    }
-                }
-            }
-            return loginuser;
+            return sb.ToString();
         }
 
-
-        public void InsertAccount(AuthViewModel vm, SqlCommand cmd)
+        /// <summary>
+        /// アカウントリスト作成用クエリ作成
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private string getAccountListSelectQuery()
         {
-
             StringBuilder sb = new StringBuilder();
+
+            sb.Append(" SELECT")
+              .Append(" NAME,")
+              .Append(" EMAIL")
+              .Append(" FROM")
+              .Append(" ACCOUNT");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// アカウント登録用クエリ作成
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private string getRegisterQuery(AuthViewModel vm)
+        {
+            StringBuilder sb = new StringBuilder();
+
             sb.Append(" INSERT INTO");
             sb.Append(" ACCOUNT");
             sb.Append(" (NAME,");
-            sb.Append(" PASSWORD)");
+            sb.Append(" PASSWORD,");
+            sb.Append(" EMAIL)");
             sb.Append(" VALUES");
             sb.Append($" ('{vm.Name}',");
-            sb.Append($" '{vm.Password}')");
-            cmd.CommandText = sb.ToString();
+            sb.Append($" '{vm.Password}',");
+            sb.Append($" '{vm.Email}')");
 
-            cmd.ExecuteNonQuery();
-
+            return sb.ToString();
         }
 
         #endregion

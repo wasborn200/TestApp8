@@ -1,23 +1,19 @@
 ﻿using TestApp8.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Data.SqlClient;
-using System.Configuration;
-using TestApp8.DataModels;
-using System.Text;
 using TestApp8.Dao;
-using System.Windows.Forms;
 
 namespace TestApp8.Controllers
 {
     public class AuthController : Controller
     {
+
+        #region ログイン・ログアウト
+
         /// <summary>
-        /// ログイン　表示
+        /// ログイン画面
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -29,7 +25,7 @@ namespace TestApp8.Controllers
         /// <summary>
         /// ログイン処理
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="vm">認証ビューモデル</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Login(AuthViewModel vm)
@@ -49,28 +45,6 @@ namespace TestApp8.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult Signin()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Signin(AuthViewModel vm)
-        {
-            try
-            {
-                InsertAccount(vm);
-
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception)
-            {
-                this.ModelState.AddModelError(string.Empty, "アカウントを登録することが出来ませんでした。");
-            }
-            return this.View(vm);
-        }
-
         /// <summary>
         /// ログアウト処理
         /// </summary>
@@ -81,58 +55,113 @@ namespace TestApp8.Controllers
             return RedirectToAction("Login", "Auth");
         }
 
-        private static bool isMatchAccount(AuthViewModel vm)
-        {
-            AuthModel loginuser = getPassword(vm);
-            if (vm.Password == loginuser.Password)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
 
+        #endregion
+
+        #region アカウント登録
+
+        /// <summary>
+        /// アカウント登録画面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Signin()
+        {
+            return View();
         }
 
-        private static AuthModel getPassword(AuthViewModel vm)
-        {
-                AuthModel loginuser;
-                //SQLServerの接続開始
-                SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
-                SqlCommand cmd = dbaccess.CreateCommand();
-                dbaccess.Open();
-                try
-                {
-                    AuthDao dao = new AuthDao();
-                    loginuser = dao.getPassword(vm, cmd);
-                }
-                catch
-                {
-                    throw;
-                }
-                dbaccess.Close();
-                return loginuser;
-        }
 
-        private static void InsertAccount(AuthViewModel vm)
+        /// <summary>
+        /// アカウント登録処理
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Signin(AuthViewModel vm)
         {
-            //SQLServerの接続開始
-            SqlConnection dbaccess = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
-            SqlCommand cmd = dbaccess.CreateCommand();
-            dbaccess.Open();
             try
             {
-                AuthDao dao = new AuthDao();
-                dao.InsertAccount(vm, cmd);
+                InsertAccount(vm);
+                TempData["message"] = "アカウントが登録されました";
+                return RedirectToAction("Login", "Auth");
             }
             catch (Exception)
             {
+                this.ModelState.AddModelError(string.Empty, "アカウントを登録することが出来ませんでした。");
+            }
+            return this.View(vm);
+        }
+
+        #endregion
+
+        #region 独自メソッド
+
+        /// <summary>
+        /// アカウント認証
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private bool isMatchAccount(AuthViewModel vm)
+        {
+            //SQLServerの接続開始
+            DbAccess dbAccess = new DbAccess();
+            SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
+            try
+            {
+                AuthDao dao = new AuthDao();
+                if(dao.isMatchAccount(dbAccess, vm, cmd) > 0)
+                {
+                    dbAccess.close();
+                    return true;
+                }
+                else
+                {
+                    dbAccess.close();
+                    return false;
+                }
+            }
+            catch
+            {
+                dbAccess.close();
                 throw;
             }
-            dbaccess.Close();
+        }
+
+        /// <summary>
+        /// アカウント登録処理
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private static void InsertAccount(AuthViewModel vm)
+        {
+            //SQLServerの接続開始
+            DbAccess dbAccess = new DbAccess();
+            SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
+
+            dbAccess.beginTransaciton();
+            try
+            {
+                AuthDao dao = new AuthDao();
+                if(dao.InsertAccount(vm, cmd, dbAccess) > 0)
+                {
+                    dbAccess.sqlTran.Commit();
+                }
+                else
+                {
+                    dbAccess.sqlTran.Rollback();
+                }
+
+                dbAccess.close();
+            }
+            catch (Exception)
+            {
+                dbAccess.close();
+                throw;
+            }
 
         }
+
+        #endregion
 
     }
 

@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace TestApp8.Dao
 {
     public class DbAccess
     {
         public SqlConnection sqlCon { get; set; }
+        public SqlTransaction sqlTran { get; set; }
         public DbAccess()
         {
             try
@@ -24,6 +22,25 @@ namespace TestApp8.Dao
                 throw;
             }
         }
+
+        public void beginTransaciton()
+        {
+            try
+            {
+                if(this.sqlCon.State != ConnectionState.Open)
+                {
+                    this.sqlCon.Open();
+                }
+                this.sqlTran = this.sqlCon.BeginTransaction();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
 
         public void close()
         {
@@ -39,6 +56,28 @@ namespace TestApp8.Dao
                 DataTable dt = new DataTable();
                 dt.Load(read);
                 return dt;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public int executeNonQuery(SqlCommand cmd)
+        {
+            try
+            {
+                if(this.sqlCon.State != ConnectionState.Open)
+                {
+                    this.sqlCon.Open();
+                }
+                if(this.sqlTran != null)
+                {
+                    cmd.Transaction = this.sqlTran;
+                }
+                int result = cmd.ExecuteNonQuery();
+                return result;
             }
             catch (Exception)
             {
