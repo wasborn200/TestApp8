@@ -49,6 +49,7 @@ namespace TestApp8.Controllers
 
         /// <summary>
         /// クッキーにアカウントIDを登録する
+        ///TODO true=remember me　false=永続的ではない　後に機能分け実装
         /// </summary>
         /// <param name="vm">認証ビューモデル</param>
         /// <returns></returns>
@@ -57,7 +58,7 @@ namespace TestApp8.Controllers
             vm.AccountId = getAccountId(vm);
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
                 vm.Name, DateTime.Now, DateTime.Now.AddMinutes(30),
-                false, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
+                true, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
 

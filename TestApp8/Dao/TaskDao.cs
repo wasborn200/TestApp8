@@ -27,6 +27,14 @@ namespace TestApp8.Dao
 
         }
 
+        public int deleteTask(TaskListViewModel vm, SqlCommand cmd, DbAccess dbAccess)
+        {
+            cmd.CommandText = this.getDeleteTaskQuery(vm);
+
+            return dbAccess.executeNonQuery(cmd);
+
+        }
+
         /// <summary>
         /// タスクリスト取得
         /// </summary>
@@ -59,6 +67,10 @@ namespace TestApp8.Dao
             {
                 TaskListModel taskListModel = new TaskListModel();
 
+                if (!(dr["TASK_ID"] is DBNull))
+                {
+                    taskListModel.TaskId = Convert.ToInt32(dr["TASK_ID"]);
+                }
                 if (!(dr["TITLE"] is DBNull))
                 {
                     taskListModel.Title = Convert.ToString(dr["TITLE"]);
@@ -96,6 +108,18 @@ namespace TestApp8.Dao
             return sb.ToString();
         }
 
+        private string getDeleteTaskQuery(TaskListViewModel vm)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" DELETE")
+              .Append(" TASK")
+              .Append(" WHERE")
+              .Append($" TASK_ID = '{vm.TaskId}'");
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// タスク一蘭取得用クエリ作成
         /// </summary>
@@ -106,6 +130,7 @@ namespace TestApp8.Dao
             StringBuilder sb = new StringBuilder();
 
             sb.Append(" SELECT")
+              .Append(" TASK_ID,")
               .Append(" TITLE,")
               .Append(" MEMO")
               .Append(" FROM")
