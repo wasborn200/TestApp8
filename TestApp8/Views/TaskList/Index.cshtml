@@ -1,0 +1,36 @@
+﻿@model List<TestApp8.Models.TaskListViewModel>
+
+@{
+    ViewBag.Title = "タスク一覧";
+}
+
+<h2>タスク一覧</h2>
+
+<div>
+    <label>@TempData["username"]</label>
+    <table class="table table-condensed table-striped table-bordered">
+        <tr>
+            <th>
+                <label>Title</label>
+            </th>
+            <th>
+                <label>Memo</label>
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelitem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelitem => item.Memo)
+                </th>
+            </tr>
+        }
+    </table>
+</div>
+
+<br />
+@Html.ActionLink("タスク作成", "Index", "Task")
+<br />

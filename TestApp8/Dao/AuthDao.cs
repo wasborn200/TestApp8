@@ -71,7 +71,7 @@ namespace TestApp8.Dao
         /// <param name="vm">認証ビューモデル</param>
         /// <param name="cmd">SQLクエリ</param>
         /// <returns></returns>
-        public int InsertAccount(AuthViewModel vm, SqlCommand cmd, DbAccess dbAccess)
+        public int registerAccount(AuthViewModel vm, SqlCommand cmd, DbAccess dbAccess)
         {
             cmd.CommandText = this.getRegisterQuery(vm);
 
@@ -147,13 +147,13 @@ namespace TestApp8.Dao
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" SELECT");
-            sb.Append(" COUNT(Name) AS COUNT");
-            sb.Append(" FROM");
-            sb.Append(" ACCOUNT");
-            sb.Append(" WHERE");
-            sb.Append($" NAME = '{vm.Name}'");
-            sb.Append($" AND PASSWORD = '{vm.Password}'");
+            sb.Append(" SELECT")
+              .Append(" COUNT(Name) AS COUNT")
+              .Append(" FROM")
+              .Append(" ACCOUNT")
+              .Append(" WHERE")
+              .Append($" NAME = '{vm.Name}'")
+              .Append($" AND PASSWORD = '{vm.Password}'");
 
             return sb.ToString();
         }
@@ -199,15 +199,15 @@ namespace TestApp8.Dao
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(" INSERT INTO");
-            sb.Append(" ACCOUNT");
-            sb.Append(" (NAME,");
-            sb.Append(" PASSWORD,");
-            sb.Append(" EMAIL)");
-            sb.Append(" VALUES");
-            sb.Append($" ('{vm.Name}',");
-            sb.Append($" '{vm.Password}',");
-            sb.Append($" '{vm.Email}')");
+            sb.Append(" INSERT INTO")
+              .Append(" ACCOUNT")
+              .Append(" (NAME,")
+              .Append(" PASSWORD,")
+              .Append(" EMAIL)")
+              .Append(" VALUES")
+              .Append($" ('{vm.Name}',")
+              .Append($" '{vm.Password}',")
+              .Append($" '{vm.Email}')");
 
             return sb.ToString();
         }

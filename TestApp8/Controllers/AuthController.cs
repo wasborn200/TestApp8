@@ -33,14 +33,7 @@ namespace TestApp8.Controllers
         {
             if (isMatchAccount(vm))
             {
-                vm.AccountId = getAccountId(vm);
-                // ユーザー認証　成功
-                // FormsAuthentication.SetAuthCookie(vm.Name, true);
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                    vm.Name, DateTime.Now, DateTime.Now.AddMinutes(30), 
-                    false, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
-
-                string encTicket = FormsAuthentication.Encrypt(ticket);
+                string encTicket = setAccountIdatCookie(vm);
                 Response.Cookies.Add(new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
                 return RedirectToAction("Index", "Home");
@@ -52,6 +45,23 @@ namespace TestApp8.Controllers
                 this.ModelState.AddModelError(string.Empty, "指定されたユーザー名またはパスワードが正しくありません。");
                 return this.View(vm);
             }
+        }
+
+        /// <summary>
+        /// クッキーにアカウントIDを登録する
+        /// </summary>
+        /// <param name="vm">認証ビューモデル</param>
+        /// <returns></returns>
+        private string setAccountIdatCookie(AuthViewModel vm)
+        {
+            vm.AccountId = getAccountId(vm);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                vm.Name, DateTime.Now, DateTime.Now.AddMinutes(30),
+                false, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
+
+            string encTicket = FormsAuthentication.Encrypt(ticket);
+
+            return encTicket;
         }
 
         /// <summary>
@@ -90,7 +100,7 @@ namespace TestApp8.Controllers
         {
             try
             {
-                InsertAccount(vm);
+                registerAccount(vm);
                 TempData["message"] = "アカウントが登録されました";
                 return RedirectToAction("Login", "Auth");
             }
@@ -165,7 +175,7 @@ namespace TestApp8.Controllers
         /// </summary>
         /// <param name="vm">認証ビューモデル</param>
         /// <returns></returns>
-        private static void InsertAccount(AuthViewModel vm)
+        private static void registerAccount(AuthViewModel vm)
         {
             //SQLServerの接続開始
             DbAccess dbAccess = new DbAccess();
@@ -175,7 +185,7 @@ namespace TestApp8.Controllers
             try
             {
                 AuthDao dao = new AuthDao();
-                if(dao.InsertAccount(vm, cmd, dbAccess) > 0)
+                if(dao.registerAccount(vm, cmd, dbAccess) > 0)
                 {
                     dbAccess.sqlTran.Commit();
                 }

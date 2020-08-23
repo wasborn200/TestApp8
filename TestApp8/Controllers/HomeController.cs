@@ -38,7 +38,7 @@ namespace TestApp8.Controllers
             FormsIdentity id = (FormsIdentity)HttpContext.User.Identity;
             FormsAuthenticationTicket ticket = id.Ticket;
             string MyUserData = ticket.UserData;
-            TempData["message"] = MyUserData;
+            TempData["message"] = $"アカウントID：{MyUserData}";
 
             return View("index", authViewList);
         }
