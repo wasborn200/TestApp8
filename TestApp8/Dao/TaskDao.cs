@@ -13,7 +13,7 @@ namespace TestApp8.Dao
     public class TaskDao
     {
         /// <summary>
-        /// アカウント登録
+        /// タスク作成
         /// </summary>
         /// <param name="dbAccess">DBアクセス設定</param>
         /// <param name="vm">タスクビューモデル</param>
@@ -27,6 +27,13 @@ namespace TestApp8.Dao
 
         }
 
+        /// <summary>
+        /// タスクリスト取得
+        /// </summary>
+        /// <param name="accountId">アカウントID</param>
+        /// <param name="dbAccess">DBアクセス設定</param>
+        /// <param name="cmd">SQLクエリ</param>
+        /// <returns></returns>
         public List<TaskListModel> getTaskList(int accountId, DbAccess dbAccess, SqlCommand cmd)
         {
             cmd.CommandText = this.getTaskListSelectQuery(accountId);
@@ -39,6 +46,11 @@ namespace TestApp8.Dao
             return taskList;
         }
 
+        /// <summary>
+        /// datatable型からList<TaskListModel>型に変換
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         private List<TaskListModel> getTaskListBindDataTable(DataTable dt)
         {
             List<TaskListModel> authList = new List<TaskListModel>();
@@ -63,9 +75,9 @@ namespace TestApp8.Dao
 
 
         /// <summary>
-        /// アカウント登録用クエリ作成
+        /// タスク登録用クエリ作成
         /// </summary>
-        /// <param name="vm">認証ビューモデル</param>
+        /// <param name="vm">タスクビューモデル</param>
         /// <returns></returns>
         private string getCreateTaskQuery(TaskViewModel vm)
         {
@@ -84,6 +96,11 @@ namespace TestApp8.Dao
             return sb.ToString();
         }
 
+        /// <summary>
+        /// タスク一蘭取得用クエリ作成
+        /// </summary>
+        /// <param name="accountID">アカウントID</param>
+        /// <returns></returns>
         private string getTaskListSelectQuery(int accountID)
         {
             StringBuilder sb = new StringBuilder();

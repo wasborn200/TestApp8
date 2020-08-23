@@ -14,7 +14,10 @@ namespace TestApp8.Controllers
 {
     public class TaskListController : Controller
     {
-        // GET: TaskList
+        /// <summary>
+        /// タスク一覧画面
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             int accountId = getAccountId();
@@ -33,6 +36,10 @@ namespace TestApp8.Controllers
             return View("index", taskListViewList);
         }
 
+        /// <summary>
+        /// アカウントID取得
+        /// </summary>
+        /// <returns></returns>
         public int getAccountId()
         {
             FormsIdentity id = (FormsIdentity)HttpContext.User.Identity;
@@ -41,6 +48,11 @@ namespace TestApp8.Controllers
             return int.Parse(MyUserData);
         }
 
+        /// <summary>
+        /// タスク一覧取得
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
         private List<TaskListModel> getTaskList(int accountId)
         {
             DbAccess dbAccess = new DbAccess();

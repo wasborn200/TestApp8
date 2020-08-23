@@ -13,7 +13,10 @@ namespace TestApp8.Controllers
     [Authorize]
     public class TaskController : Controller
     {
-        // GET: Task
+        /// <summary>
+        /// タスク作成画面
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -22,6 +25,11 @@ namespace TestApp8.Controllers
             return View();
         }
 
+        /// <summary>
+        /// タスク作成
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create(TaskViewModel vm)
         {
@@ -39,6 +47,10 @@ namespace TestApp8.Controllers
             }
         }
 
+        /// <summary>
+        /// アカウントID取得
+        /// </summary>
+        /// <returns></returns>
         public int getAccountId()
         {
             FormsIdentity id = (FormsIdentity)HttpContext.User.Identity;
@@ -48,7 +60,7 @@ namespace TestApp8.Controllers
         }
 
         /// <summary>
-        /// アカウント登録処理
+        /// タスク登録処理
         /// </summary>
         /// <param name="vm">認証ビューモデル</param>
         /// <returns></returns>
