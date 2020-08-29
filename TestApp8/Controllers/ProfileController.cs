@@ -20,17 +20,14 @@ namespace TestApp8.Controllers
         {
 
             int accountId = getAccountIdFromCookie();
-            List<ProfileModel> profileList = getProfileList(accountId);
-            List<ProfileViewModel> profileViewList = new List<ProfileViewModel>();
-            foreach (var item in profileList)
-            {
-                ProfileViewModel profileModel = new ProfileViewModel();
-                profileModel.Name = item.Name;
-                profileModel.Email = item.Email;
-                profileViewList.Add(profileModel);
-            }
+            ProfileModel profileList = getProfileList(accountId);
+            ProfileViewModel vm = new ProfileViewModel();
+            vm.Name = profileList.Name;
+            vm.Email = profileList.Email;
+            vm.Prefucture = profileList.Prefucture;
+            vm.Address = profileList.Address;
 
-            return View("index", profileViewList);
+            return View("index", vm);
         }
 
         [HttpGet]
@@ -46,17 +43,35 @@ namespace TestApp8.Controllers
             }
             vm.Address = address;
 
+            ViewBag.SelectOptions = new SelectListItem[] {
+            new SelectListItem() { Value="jQuery Tips", Text="Tips" },
+            new SelectListItem() { Value="jQuery リファレンス ", Text="jQuery リファレンス " },
+             new SelectListItem() { Value="jQuery サンプル集 ", Text="jQuery サンプル集 " }
+            };
+
+
+
             return View("edit", vm);
         }
 
-        private List<ProfileModel> getProfileList(int accountId)
+        [HttpPost]
+        public ActionResult Edit(ProfileViewModel vm)
+        {
+
+            // valueのほうが値に入っているからstringにしてintに変更する必要があると思われる
+            string name = vm.Name;
+            string str = vm.Test;
+            return View("index");
+        }
+
+        private ProfileModel getProfileList(int accountId)
         {
             DbAccess dbAccess = new DbAccess();
             SqlCommand cmd = dbAccess.sqlCon.CreateCommand();
             try
             {
                 ProfileDao dao = new ProfileDao();
-                List<ProfileModel> profileList = dao.getProfileList(dbAccess, cmd, accountId);
+                ProfileModel profileList = dao.getProfileList(dbAccess, cmd, accountId);
 
                 dbAccess.close();
                 return profileList;

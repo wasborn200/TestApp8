@@ -1,7 +1,43 @@
 ﻿@model TestApp8.Models.ProfileViewModel
 @{
     ViewBag.Title = "Profile";
-}
+
+
+}<div class="login-form">
+     <form method="post" action="~/profile/edit">
+         <h1>@ViewBag.Title</h1>
+         <div class="form-item">
+             @Html.TextBoxFor(model => model.Name, new { type = "name", @value = Model.Name })
+         </div>
+         <div class="form-item">
+             @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", type = "password" })
+         </div>
+         <div class="form-item">
+             @Html.TextBoxFor(model => model.Prefucture)
+
+
+             @Html.DropDownListFor(
+  model => model.Test,          // プロパティ
+  (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
+  " 選択してください ",          // 空オプション
+  new { @class = "title_list" }  // その他の属性
+) <br />
+         </div>
+         <div class="form-item">
+             @Html.TextBoxFor(model => model.Address)
+         </div>
+         <div class="button-panel">
+             <button type="submit" class="button" title="Sign In" value="Sign In">Login</button>
+         </div>
+         <label style="color:#ff0000">@Html.ValidationSummary()</label>
+         <div class="form-footer">
+             <p>@Html.ActionLink("Create an account", "Edit", "Auth")</p>
+             <p><a href="#">Forgot password?</a></p>
+         </div>
+     </form>
+</div>
+
+
 
 <div>
     <table class="table table-condensed table-striped table-bordered">

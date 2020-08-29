@@ -1,4 +1,4 @@
-﻿@model List<TestApp8.Models.ProfileViewModel>
+﻿@model TestApp8.Models.ProfileViewModel
 @{
     ViewBag.Title = "Profile";
 }
@@ -6,39 +6,36 @@
 <div>
     <table class="table table-condensed table-striped table-bordered">
 
-        @foreach (var item in Model)
-        {
-
         <tr>
             <th>
-                @Html.DisplayNameFor(modelitem => item.Name)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayFor(modelitem => item.Name)
+                @Html.DisplayFor(model => model.Name)
             </th>
         </tr>
         <tr>
             <th>
-                @Html.DisplayNameFor(modelitem => item.Email)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayFor(modelitem => item.Email)
-            </th>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(modelitem => item.Prefucture)
-            </th>
-            <th>
-                @Html.DisplayFor(modelitem => item.Prefucture)
+                @Html.DisplayFor(model => model.Email)
             </th>
         </tr>
         <tr>
             <th>
-                @Html.DisplayNameFor(modelitem => item.Address)
+                @Html.DisplayNameFor(model => model.Prefucture)
             </th>
             <th>
-                @Html.DisplayFor(modelitem => item.Address)
+                @Html.DisplayFor(model => model.Prefucture)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Address)
             </th>
         </tr>
         <tr>
@@ -49,17 +46,16 @@
                       "Edit",            // アクション名
                       new
                            {
-                               name = item.Name,
-                               email = item.Email,
-                            prefucture = item.Prefucture,
-                               address = item.Address
+                               name = Model.Name,
+                               email = Model.Email,
+                            prefucture = Model.Prefucture,
+                               address = Model.Address
                            }
                     )
                 </div>
             </th>
             <th></th>
         </tr>
-        }
 
     </table>
 </div>

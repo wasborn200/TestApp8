@@ -22,6 +22,10 @@ namespace TestApp8.Models
         public int Prefucture { get; set; }
         [Display(Name = "住所")]
         public string Address { get; set; }
+
+        public string Test { get; set; }
         public List<ProfileViewModel> profileViewList { get; set; }
+
+        
     }
 }
