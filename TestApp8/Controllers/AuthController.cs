@@ -85,7 +85,7 @@ namespace TestApp8.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Signin()
+        public ActionResult Register()
         {
             return View();
         }
@@ -97,7 +97,7 @@ namespace TestApp8.Controllers
         /// <param name="vm">認証ビューモデル</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Signin(AuthViewModel vm)
+        public ActionResult Register(AuthViewModel vm)
         {
             try
             {
