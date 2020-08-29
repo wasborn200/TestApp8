@@ -1,0 +1,65 @@
+﻿@model List<TestApp8.Models.ProfileViewModel>
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div>
+    <table class="table table-condensed table-striped table-bordered">
+
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelitem => item.Name)
+            </th>
+            <th>
+                @Html.DisplayFor(modelitem => item.Name)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelitem => item.Email)
+            </th>
+            <th>
+                @Html.DisplayFor(modelitem => item.Email)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelitem => item.Prefucture)
+            </th>
+            <th>
+                @Html.DisplayFor(modelitem => item.Prefucture)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelitem => item.Address)
+            </th>
+            <th>
+                @Html.DisplayFor(modelitem => item.Address)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <div>
+                    @Html.ActionLink(
+                      "編集",               // リンクテキスト
+                      "Edit",            // アクション名
+                      new
+                           {
+                               name = item.Name,
+                               email = item.Email,
+                            prefucture = item.Prefucture,
+                               address = item.Address
+                           }
+                    )
+                </div>
+            </th>
+            <th></th>
+        </tr>
+        }
+
+    </table>
+</div>

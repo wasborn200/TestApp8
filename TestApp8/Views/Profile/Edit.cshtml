@@ -1,0 +1,41 @@
+﻿@model TestApp8.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div>
+    <table class="table table-condensed table-striped table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Name)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Email)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Prefucture)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Prefucture)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Address)
+            </th>
+        </tr>
+    </table>
+</div>
