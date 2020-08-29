@@ -10,11 +10,11 @@ namespace TestApp8.Models
     {
         public int AccountId { get; set; }
 
-        [Display(Name = "ユーザーネーム")]
+        [Display(Name = "Name")]
         [Required(ErrorMessage = "ユーザーネームは必須入力です。")]
         public string Name { get; set; }
 
-        [Display(Name = "パスワード")]
+        [Display(Name = "Password")]
         [Required(ErrorMessage = "パスワードは必須入力です。")]
         public string Password { get; set; }
 

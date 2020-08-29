@@ -123,12 +123,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Dao\AuthDao.cs" />
     <Compile Include="Dao\DbAccess.cs" />
+    <Compile Include="Dao\ProfileDao.cs" />
     <Compile Include="Dao\TaskDao.cs" />
     <Compile Include="DataModels\AuthModel.cs" />
+    <Compile Include="DataModels\ProfileModel.cs" />
     <Compile Include="DataModels\TaskListModel.cs" />
     <Compile Include="DataModels\TaskModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,6 +139,7 @@
     </Compile>
     <Compile Include="Models\AuthViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\TaskListViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +184,8 @@
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\TaskList\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

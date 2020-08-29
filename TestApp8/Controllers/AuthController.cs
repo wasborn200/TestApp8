@@ -36,7 +36,7 @@ namespace TestApp8.Controllers
                 string encTicket = setAccountIdatCookie(vm);
                 Response.Cookies.Add(new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Profile");
 
             }
             else

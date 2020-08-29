@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Web.Mvc;
 using TestApp8.DataModels;
 using TestApp8.Models;
 
 namespace TestApp8.Dao
 {
+    [Authorize]
     public class AuthDao
     {
         #region データ取得
