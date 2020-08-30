@@ -36,7 +36,7 @@ namespace TestApp8.Controllers
                 string encTicket = setAccountIdatCookie(vm);
                 Response.Cookies.Add(new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
-                return RedirectToAction("Index", "Profile");
+                return RedirectToAction("index", "profile");
 
             }
             else
@@ -56,9 +56,14 @@ namespace TestApp8.Controllers
         private string setAccountIdatCookie(AuthViewModel vm)
         {
             vm.AccountId = getAccountId(vm);
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                vm.Name, DateTime.Now, DateTime.Now.AddMinutes(30),
-                true, vm.AccountId.ToString(), FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                1,
+                vm.Name, 
+                DateTime.Now, 
+                DateTime.Now.AddMonths(1),
+                true, 
+                vm.AccountId.ToString(), 
+                FormsAuthentication.FormsCookiePath);
 
             string encTicket = FormsAuthentication.Encrypt(ticket);
 

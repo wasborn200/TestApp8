@@ -13,7 +13,7 @@ namespace TestApp8.DataModels
         public string Password { get; set; }
 
         public string Email { get; set; }
-        public int Prefucture { get; set; }
+        public string Prefucture { get; set; }
         public string Address { get; set; }
         public List<ProfileModel> profileList { get; set; }
     }

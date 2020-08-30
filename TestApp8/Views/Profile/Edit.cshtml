@@ -10,24 +10,20 @@
              @Html.TextBoxFor(model => model.Name, new { type = "name", @value = Model.Name })
          </div>
          <div class="form-item">
-             @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", type = "password" })
+             @Html.TextBoxFor(model => model.Password, new { type = "password", @value = Model.Password })
          </div>
          <div class="form-item">
-             @Html.TextBoxFor(model => model.Prefucture)
-
-
-             @Html.DropDownListFor(
-  model => model.Test,          // プロパティ
-  (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
-  " 選択してください ",          // 空オプション
-  new { @class = "title_list" }  // その他の属性
-) <br />
+             @Html.DropDownListFor(model => model.Prefucture,          // プロパティ
+                (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
+                 " 都道府県 ",          // 空オプション
+                    new { @class = "title_list" }  // その他の属性
+                ) <br />
          </div>
          <div class="form-item">
-             @Html.TextBoxFor(model => model.Address)
+             @Html.TextBoxFor(model => model.Address, new { type = "text", @value = Model.Address })
          </div>
          <div class="button-panel">
-             <button type="submit" class="button" title="Sign In" value="Sign In">Login</button>
+             <button type="submit" class="button" title="Sign In" value="Sign In">Update</button>
          </div>
          <label style="color:#ff0000">@Html.ValidationSummary()</label>
          <div class="form-footer">
@@ -35,43 +31,4 @@
              <p><a href="#">Forgot password?</a></p>
          </div>
      </form>
-</div>
-
-
-
-<div>
-    <table class="table table-condensed table-striped table-bordered">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayFor(model => model.Name)
-            </th>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayFor(model => model.Email)
-            </th>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Prefucture)
-            </th>
-            <th>
-                @Html.DisplayFor(model => model.Prefucture)
-            </th>
-        </tr>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayFor(model => model.Address)
-            </th>
-        </tr>
-    </table>
 </div>

@@ -56,7 +56,7 @@ namespace TestApp8.Dao
             }
             if (!(dr["PREFUCTURE"] is DBNull))
             {
-                profileList.Prefucture = Convert.ToInt32(dr["PREFUCTURE"]);
+                profileList.Prefucture = Convert.ToString(dr["PREFUCTURE"]);
             }
             if (!(dr["ADDRESS"] is DBNull))
             {

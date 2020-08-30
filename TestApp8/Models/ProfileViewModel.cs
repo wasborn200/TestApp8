@@ -19,7 +19,7 @@ namespace TestApp8.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
         [Display(Name = "都道府県")]
-        public int Prefucture { get; set; }
+        public string Prefucture { get; set; }
         [Display(Name = "住所")]
         public string Address { get; set; }
 
