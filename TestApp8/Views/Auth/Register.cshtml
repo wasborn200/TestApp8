@@ -1,0 +1,28 @@
+﻿@model TestApp8.Models.AuthViewModel
+@{
+    ViewBag.Title = "Create an account";
+}
+
+
+<div class="login-form">
+    <form method="post" action="~/auth/register">
+        <h1>@ViewBag.Title</h1>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", type = "name" })
+        </div>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Email, new { placeholder = "Email", type = "email" })
+        </div>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", type = "password" })
+        </div>
+        <div class="button-panel">
+            <button type="submit" class="button" title="Sign In" value="Sign In">Create</button>
+        </div>
+        <label style="color:#ff0000">@Html.ValidationSummary()</label>
+        <div class="form-footer">
+            <p>@Html.ActionLink("Login", "Login", "Auth")</p>
+            <p><a href="#">Forgot password?</a></p>
+        </div>
+    </form>
+</div>
