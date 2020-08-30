@@ -47,6 +47,16 @@ namespace TestApp8.Controllers
             }
         }
 
+        public ActionResult EasyLogin(AuthViewModel vm)
+        {
+            vm.Name = "user1";
+            vm.AccountId = 1;
+            string encTicket = setAccountIdatCookie(vm);
+            Response.Cookies.Add(new System.Web.HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+
+            return RedirectToAction("index", "profile");
+        }
+
         /// <summary>
         /// クッキーにアカウントIDを登録する
         ///TODO true=remember me　false=永続的ではない　後に機能分け実装
@@ -60,7 +70,7 @@ namespace TestApp8.Controllers
                 1,
                 vm.Name, 
                 DateTime.Now, 
-                DateTime.Now.AddMonths(1),
+                DateTime.Now.AddMinutes(30),
                 true, 
                 vm.AccountId.ToString(), 
                 FormsAuthentication.FormsCookiePath);
