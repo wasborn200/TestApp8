@@ -1,34 +1,90 @@
 ﻿@model TestApp8.Models.ProfileViewModel
 @{
     ViewBag.Title = "Profile";
+}
 
 
-}<div class="login-form">
-     <form method="post" action="~/profile/edit">
-         <h1>@ViewBag.Title</h1>
-         <div class="form-item">
-             @Html.TextBoxFor(model => model.Name, new { type = "name", @value = Model.Name })
-         </div>
-         <div class="form-item">
-             @Html.TextBoxFor(model => model.Password, new { type = "password", @value = Model.Password })
-         </div>
-         <div class="form-item">
-             @Html.DropDownListFor(model => model.Prefucture,          // プロパティ
-                (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
-                 " 都道府県 ",          // 空オプション
-                    new { @class = "title_list" }  // その他の属性
-                ) <br />
-         </div>
-         <div class="form-item">
-             @Html.TextBoxFor(model => model.Address, new { type = "text", @value = Model.Address })
-         </div>
-         <div class="button-panel">
-             <button type="submit" class="button" title="Sign In" value="Sign In">Update</button>
-         </div>
-         <label style="color:#ff0000">@Html.ValidationSummary()</label>
-         <div class="form-footer">
-             <p>@Html.ActionLink("Create an account", "Edit", "Auth")</p>
-             <p><a href="#">Forgot password?</a></p>
-         </div>
-     </form>
+
+<div class="container" style="margin-top:50px;">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color:#ffda00;">
+        プロフィール編集
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post" action="~/profile/edit">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.Name, new { type = "name", @value = Model.Name })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.Email, new { type = "email", @value = Model.Email })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        @Html.DisplayNameFor(model => model.Prefucture)
+                    </label>
+                    <div class="col-sm-10" style="width: 160px;">
+                        @Html.DropDownListFor(model => model.Prefucture,          // プロパティ
+                            (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
+                            " 都道府県 ",          // 空オプション
+                            new { @class = "form-control", @value = Model.Prefucture }  // その他の属性
+                        )
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.Address, new { type = "text", @value = Model.Address })
+                    </div>
+                </div>
+                <label style="color:#ff0000">@Html.ValidationSummary()</label>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="button btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+@*<div class="profile-form">
+    <form method="post" action="~/profile/edit">
+        <h1>@ViewBag.Title</h1>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Name, new { type = "name", @value = Model.Name })
+        </div>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Password, new { type = "text", @value = Model.Email })
+        </div>
+        <div class="form-item">
+            @Html.DropDownListFor(model => model.Prefucture,          // プロパティ
+               (IEnumerable<SelectListItem>)ViewBag.SelectOptions,  // 選択オプション
+                " 都道府県 ",          // 空オプション
+                   new { @class = "title_list" }  // その他の属性
+               ) <br />
+        </div>
+        <div class="form-item">
+            @Html.TextBoxFor(model => model.Address, new { type = "text", @value = Model.Address })
+        </div>
+        <div class="button-panel">
+            <button type="submit" class="button" title="Sign In" value="Sign In">Update</button>
+        </div>
+        <label style="color:#ff0000">@Html.ValidationSummary()</label>
+        <div class="form-footer">
+            <p>@Html.ActionLink("Create an account", "Edit", "Auth")</p>
+            <p><a href="#">Forgot password?</a></p>
+        </div>
+    </form>
+</div>*@

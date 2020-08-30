@@ -24,7 +24,9 @@ namespace TestApp8.Controllers
             ProfileViewModel vm = new ProfileViewModel();
             vm.Name = profileList.Name;
             vm.Email = profileList.Email;
-            vm.Prefucture = profileList.Prefucture;
+            string pnumber = profileList.Prefucture;
+            var selectoptions = getSelectListItem();
+            vm.Prefucture = selectoptions.Where(p => p.Value == "2").First().Text;
             vm.Address = profileList.Address;
 
             return View("index", vm);
