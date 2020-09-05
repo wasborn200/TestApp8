@@ -124,6 +124,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProfileEditController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Dao\AuthDao.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Dao\ProfileDao.cs" />
     <Compile Include="Dao\TaskDao.cs" />
     <Compile Include="DataModels\AuthModel.cs" />
+    <Compile Include="DataModels\ProfileEditModel.cs" />
     <Compile Include="DataModels\ProfileModel.cs" />
     <Compile Include="DataModels\TaskListModel.cs" />
     <Compile Include="DataModels\TaskModel.cs" />
@@ -139,10 +141,12 @@
     </Compile>
     <Compile Include="Models\AuthViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\ProfileEditViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\TaskListViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\PrefuctureDropDown.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -187,10 +191,10 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\TaskEdit\index.cshtml" />
+    <Content Include="Views\ProfileEdit\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Util\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
