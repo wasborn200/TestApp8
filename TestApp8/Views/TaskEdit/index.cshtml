@@ -1,0 +1,21 @@
+﻿@model TestApp8.Models.TaskViewModel
+@{
+    ViewBag.Title = "タスク編集";
+}
+<h2>タスク編集</h2>
+
+<form method="post" action="~/task/create">
+    <label>@TempData["username"]</label>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title)
+        @Html.TextBoxFor(model => model.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Memo)
+        @Html.TextBoxFor(model => model.Memo)
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <label style="color:#ff0000">@Html.ValidationSummary()</label>
+</form>
