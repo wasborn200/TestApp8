@@ -24,9 +24,12 @@ namespace TestApp8.Controllers
             ProfileViewModel vm = new ProfileViewModel();
             vm.Name = profileList.Name;
             vm.Email = profileList.Email;
-            string pnumber = profileList.Prefucture;
-            var selectoptions = getSelectListItem();
-            vm.Prefucture = selectoptions.Where(p => p.Value == "2").First().Text;
+            if (!(profileList.Prefucture == null))
+            {
+                string pnumber = profileList.Prefucture;
+                var selectoptions = getSelectListItem();
+                vm.Prefucture = selectoptions.Where(p => p.Value == pnumber).First().Text;
+            }
             vm.Address = profileList.Address;
 
             return View("index", vm);
@@ -54,7 +57,7 @@ namespace TestApp8.Controllers
             // valueのほうが値に入っているからstringにしてintに変更する必要があると思われる
             string name = vm.Name;
             string str = vm.Prefucture;
-            return View("index",vm);
+            return View("index", vm);
         }
 
         private ProfileModel getProfileList(int accountId)
