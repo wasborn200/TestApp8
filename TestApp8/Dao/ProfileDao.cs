@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using TestApp8.DataModels;
+using TestApp8.Models;
 
 namespace TestApp8.Dao
 {
@@ -64,6 +65,32 @@ namespace TestApp8.Dao
             }
 
             return profileList;
+        }
+
+
+        public int editProfile(ProfileEditViewModel vm, SqlCommand cmd, DbAccess dbAccess)
+        {
+            cmd.CommandText = this.getEditQuery(vm);
+
+            return dbAccess.executeNonQuery(cmd);
+
+        }
+
+        private string getEditQuery(ProfileEditViewModel vm)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" UPDATE")
+              .Append(" ACCOUNT")
+              .Append(" SET")
+              .Append($" NAME = '{vm.Name}',")
+              .Append($" EMAIL = '{vm.Email}',")
+              .Append($" PREFUCTURE = '{vm.Prefucture}',")
+              .Append($" ADDRESS = '{vm.Address}'")
+              .Append(" WHERE")
+              .Append($" ACCOUNT_ID = '{vm.AccountId}'");
+
+            return sb.ToString();
         }
     }
 }

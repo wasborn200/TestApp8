@@ -22,6 +22,7 @@ namespace TestApp8.Controllers
             int accountId = getAccountIdFromCookie();
             ProfileModel profileList = getProfileList(accountId);
             ProfileViewModel vm = new ProfileViewModel();
+            vm.AccountId = accountId;
             vm.Name = profileList.Name;
             vm.Email = profileList.Email;
             if (!(profileList.Prefucture == null))
